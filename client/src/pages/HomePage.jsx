@@ -1,6 +1,9 @@
-
-export const HomePage = () => {
+function HomePage() {
     return (
-        <div>Hi</div>
-    )
+        <main className="h-screen bg-black">
+
+        </main>
+    );
 }
+
+export default HomePage;

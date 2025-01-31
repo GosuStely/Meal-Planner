@@ -4,6 +4,7 @@
 
 ## Key Features:
 - Allow users to save favorite recipes and create meal plans.
+- Allow users to filter the result of meals by category,diet,meal type and cuisine
 - Option for users to upload and share their recipes.
 - Responsive design for mobile and desktop.
 
@@ -12,6 +13,7 @@
 - Backend: Express.
 - Database: SQLite.
 - Authentication: JWT.
+- Hashing : Bcrypt.
 
 ## Pages:
 - Home page: User can browse through recipes and like them.User can navigate to profile page.User can navigate to "create recipe" page.
