@@ -1,5 +1,7 @@
 function CreateRecipePage() {
-    return (  );
+    return (<main>
+
+    </main>);
 }
 
 export default CreateRecipePage;
