@@ -8,7 +8,7 @@ function HomePage() {
 
 
             </section>
-            <section className="bg-teal-300 w-full">
+            <section className="bg-teal-300 w-4/5">
 
             </section>
         </main>
