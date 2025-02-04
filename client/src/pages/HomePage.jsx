@@ -1,10 +1,9 @@
-import { NavLink } from "react-router";
+import SideBar from "../components/SideBar.jsx";
 function HomePage() {
     return (
-        <main className="h-screen flex flex-row">
-            <section className="bg-green-800 w-1/5 border-r border-gray-400">
-                <NavLink to="/login" >Login</NavLink>
-                <NavLink to="/register" >Register</NavLink>
+        <main className="h-screen flex flex-row bg-black">
+            <section className=" w-1/5 border-r border-gray-400">
+                <SideBar/>
 
 
             </section>
