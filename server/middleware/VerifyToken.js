@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
     }
     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err, user) =>{
         if (err) {
-            return res.status(403).send(err);
+            return res.status(403).send("You have no access.");
         }
         req.user = user;
         next();
