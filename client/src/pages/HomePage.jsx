@@ -5,7 +5,7 @@ function HomePage() {
     const users = ["Pesho","Ivan","Georgi","Aleks","Sasho"]
 
     return (
-        <main className="h-full flex flex-row bg-black text-white">
+        <main className="h-full min-h-screen flex flex-row bg-black text-white">
             <SideBar/>
             <section className="w-4/5 flex mt-5">
                 <Timeline/>

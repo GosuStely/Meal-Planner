@@ -1,12 +1,39 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {pink} from "@mui/material/colors";
+import {useNavigate} from "react-router";
 
-function Post({recipe}) {
-    //da se napravi map koito da smenq cvetovete na durjavata i cuisine-a sprqmo variable-a
+function Post({recipe,id}) {
     const [likeState, setLikeState] = useState(false)
+    const [loading,setLoading] = useState(false);
+    const [likes,setLikes] = useState(0);
     const likeIcon = likeState ? <FavoriteIcon sx={{color: pink[500]}}/> :<FavoriteBorderIcon />
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        const getLikes = async () =>{
+            try{
+                const response = await fetch(`http://localhost:3000/api/likes/${id}`,{
+                    headers:{
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                console.log(data);
+                if (!response.ok){
+                    alert(data.message);
+                    navigate("/login");
+                    return;
+                }
+                setLikes(data.total_likes);
+            }catch (e){
+                alert(e);
+            }
+        };
+        getLikes();
+    }, []);
 
     const dietColorMap = new Map();
     dietColorMap.set("Vegetarian","bg-[#A3D977] text-[#2F4E2F]");
@@ -68,12 +95,35 @@ function Post({recipe}) {
     cuisineColorMap.set("British Cuisine", "bg-[#00247D] text-[#FFFFFF]"); // Blue, white text
     cuisineColorMap.set("Vatican Cuisine", "bg-[#F5C500] text-[#000000]"); // Yellow, black text
 
-    const handleLike = () =>{
-        //fetch
-        setLikeState(!likeState);
+    const handleLike = async() =>{
+        try{
+            setLoading(true);
+            const response = await fetch(`http://localhost:3000/api/likes/${id}`,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+            if (!response.ok){
+                alert(data.message);
+                setLoading(false);
+                navigate("/login");
+                return;
+            }
+            setLikeState(true);
+            setLikes(likes + 1);
+            setLoading(false);
+        }catch (e){
+            alert(e);
+        }
     }
+
+
     return (
-        <article className="mx-30 px-5 mb-20">
+        <article className="mx-30 px-5 mb-20 min-w-2/3">
             <h2 className={"border-b border-gray-500 pb-2 text-lg"}>{recipe.creator}</h2>
 
             <h3 className={"text-2xl text-center my-4"}>{recipe.title}</h3>
@@ -91,8 +141,8 @@ function Post({recipe}) {
                 <p className={`${dietColorMap.get(recipe.diet)} p-2 rounded-2xl text-black font-bold`}>{recipe.diet}</p>
                 <p className={`${cuisineColorMap.get(recipe.cuisine)} p-2 rounded-2xl text-black font-bold`}>{recipe.cuisine}</p>
             </div>
-            <button className={"cursor-pointer"} onClick={handleLike}>{likeIcon}</button>
-            <span className={"ml-2"}>20 Likes</span>
+            <button className={"cursor-pointer"} onClick={handleLike} disabled={loading}>{likeIcon}</button>
+            <span className={"ml-2"}>{likes} Likes</span>
         </article>
     );
 }

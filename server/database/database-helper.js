@@ -43,11 +43,14 @@ export const truncateRecipeQuery = `
     DELETE FROM recipe
 `;
 export const getAllRecipeQuery =`
-    SELECT * FROM recipe;
+    SELECT * FROM recipe ORDER BY id DESC;
 `;
 export const getRecipesByCreatorIdQuery =`
     SELECT * FROM recipe WHERE creator = ?;
-`
+`;
+export const getRecipeByIdQuery =`
+   SELECT * FROM recipe WHERE id = ?;
+`;
 //RecipeLikes queries
 export const createLikeTableQuery = `
 CREATE TABLE IF NOT EXISTS recipe_like(
@@ -65,6 +68,9 @@ export const insertLike = `
 export const dropLikeTable = `
     DROP TABLE IF EXISTS recipe_like
 `;
+export const getPostLikesByPostIdQuery =`
+    SELECT COUNT(*) AS total_likes FROM recipe_like WHERE recipe_id = ?;
+`
 export default {
     createUserTableQuery,
     createRecipeTableQuery,
@@ -78,5 +84,7 @@ export default {
     getAllRecipeQuery,
     getUserByUsernameQuery,
     getUserByEmailQuery,
-    getRecipesByCreatorIdQuery
+    getRecipesByCreatorIdQuery,
+    getPostLikesByPostIdQuery,
+    getRecipeByIdQuery
 }

@@ -42,7 +42,7 @@ function PostFilter(props) {
         "Ethnic Cuisine", "Fermented Foods", "Pickled Items", "Snacks", "Sustainably Sourced"
     ];
     return (
-        <div className="flex gap-5">
+        <div className="flex gap-5 mx-30">
             <Filter options={diets} label={"Filter by Diet"} handleChange={props.handleChange}/>
             <Filter options={europeanCuisines} label={"Filter by Country"} handleChange={props.handleChange}/>
             <Filter options={mealTypes} label={"Filter by Meal Type"} handleChange={props.handleChange}/>

@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import queries from "./database-helper.js";
+import queries, {getPostLikesByPostIdQuery, getRecipeByIdQuery} from "./database-helper.js";
 
 let db;
 
@@ -45,36 +45,69 @@ export function getAllRecipes() {
         console.log(e)
     }
 }
-export function getUserByUsername(username){
-    try{
+
+export function getUserByUsername(username) {
+    try {
         const res = db.prepare(queries.getUserByUsernameQuery).bind(username);
         return res.get();
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 }
-export function getUserByEmail(email){
-    try{
+
+export function getUserByEmail(email) {
+    try {
         const res = db.prepare(queries.getUserByEmailQuery).bind(email);
         return res.get();
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 }
-export function getRecipesByCreatorId(id){
-    try{
+
+export function getRecipesByCreatorId(id) {
+    try {
         const res = db.prepare(queries.getRecipesByCreatorIdQuery).bind(id);
         return res.all();
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 }
+
+export function getPostLikesByPostId(id) {
+    try {
+        const res = db.prepare(queries.getPostLikesByPostIdQuery).bind(id);
+        return res.all();
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export function insertPostLike(user_id, recipe_id, like_time) {
+    try {
+        const res = db.prepare(queries.insertLike);
+        return res.run(user_id, recipe_id, like_time);
+    } catch (e) {
+        console.log(e);
+    }
+}
+export function getRecipeById(id){
+    try{
+        const res = db.prepare(queries.getRecipeByIdQuery).bind(id);
+        return res.get()
+    }catch(e){
+        console.log(e)
+    }
+}
+
 export default {
     addRecipe,
     addUser,
     getAllRecipes,
     getUserByUsername,
     getUserByEmail,
-    getRecipesByCreatorId
+    getRecipesByCreatorId,
+    getPostLikesByPostId,
+    insertPostLike,
+    getRecipeById
 
 }

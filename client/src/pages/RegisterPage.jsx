@@ -50,7 +50,8 @@ function RegisterPage() {
     }
 
     return (
-        <main className="h-screen flex justify-center place-items-center">
+        <main className="h-screen flex flex-col justify-center place-items-center">
+            <h1 className={"text-3xl"}>Register</h1>
             <form className="flex flex-col justify-center place-items-center gap-5 w-1/5"
                   onSubmit={(e) => handleSubmit(e)}>
                 <FormDataField type={"text"} id={"username"} value={user.username}

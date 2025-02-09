@@ -1,7 +1,8 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import FormDataField from "../components/text-field/FormDataField";
 import {NavLink, useNavigate} from "react-router";
 import postData from "../utils/postData.js";
+import {AuthContext} from "../App.jsx";
 
 function LoginPage() {
     const [user, setUser] = useState({
@@ -10,12 +11,15 @@ function LoginPage() {
     });
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const {login} = useContext(AuthContext);
+
 
     async function handleSubmit(e) {
         e.preventDefault();
         try {
             const result = await postData("http://localhost:3000/api/sessions", user);
             console.log("Token:", result.token);
+            login(result.token);
             navigate("/");
         } catch (error) {
             setErrorMessage(error.message);
@@ -27,7 +31,8 @@ function LoginPage() {
         console.log(user);
     }
     return (
-        <main className="h-screen flex justify-center place-items-center">
+        <main className="h-screen flex flex-col justify-center place-items-center">
+            <h1 className={"text-3xl"}>Login</h1>
             <form className="flex flex-col justify-center place-items-center gap-5 w-1/5" onSubmit={(e) => handleSubmit(e)}>
                 <FormDataField type={"email"} id="email" value={user.email} handleChange={(e) => handleChange(e)} />
                 <FormDataField type={"password"} id="password" value={user.password} handleChange={(e) => handleChange(e)} />

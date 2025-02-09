@@ -2,15 +2,27 @@ import HomePage from "./pages/HomePage"
 import {BrowserRouter, Routes, Route} from "react-router";
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 function App() {
     const [token, setToken] = useState(null);
 
-    const login = (token) => setToken(token);
-    const logout = () => setToken(null);
+    const login = (token) => {
+        localStorage.setItem("token", token);
+        setToken(token);
+    }
+    const logout = () => {
+        localStorage.removeItem("token");
+        setToken(null);
+    }
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
 
     return (
         <AuthContext.Provider value={{token, login, logout}}>
