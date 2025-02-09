@@ -69,7 +69,15 @@ export const dropLikeTable = `
     DROP TABLE IF EXISTS recipe_like
 `;
 export const getPostLikesByPostIdQuery =`
-    SELECT COUNT(*) AS total_likes FROM recipe_like WHERE recipe_id = ?;
+     SELECT u.username, r.like_time
+     FROM recipe_like as r
+     INNER JOIN user as u
+     ON r.user_id = u.id
+     WHERE r.recipe_id = ?;
+`
+export const removeLikeOnPostQuery =`
+    DELETE FROM recipe_like
+    WHERE user_id = ? AND recipe_id = ?;
 `
 export default {
     createUserTableQuery,
@@ -86,5 +94,6 @@ export default {
     getUserByEmailQuery,
     getRecipesByCreatorIdQuery,
     getPostLikesByPostIdQuery,
-    getRecipeByIdQuery
+    getRecipeByIdQuery,
+    removeLikeOnPostQuery
 }

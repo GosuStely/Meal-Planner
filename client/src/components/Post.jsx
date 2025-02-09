@@ -5,11 +5,11 @@ import {pink} from "@mui/material/colors";
 import {useNavigate} from "react-router";
 
 function Post({recipe,id}) {
+    //da se napravi Like component v koito da se sloji logikata ot tuka
     const [likeState, setLikeState] = useState(false)
     const [loading,setLoading] = useState(false);
-    const [likes,setLikes] = useState(0);
+    const [likes,setLikes] = useState([]);
     const likeIcon = likeState ? <FavoriteIcon sx={{color: pink[500]}}/> :<FavoriteBorderIcon />
-    const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -24,12 +24,14 @@ function Post({recipe,id}) {
                 console.log(data);
                 if (!response.ok){
                     alert(data.message);
-                    navigate("/login");
-                    return;
                 }
-                setLikes(data.total_likes);
+                setLikes(data.likes);
+                if (data.likes.some(like => like.username === data.senderUsername)){
+                    console.log("yes")
+                    setLikeState(true);
+                }
             }catch (e){
-                alert(e);
+                console.log(e)
             }
         };
         getLikes();
@@ -96,8 +98,18 @@ function Post({recipe,id}) {
     cuisineColorMap.set("Vatican Cuisine", "bg-[#F5C500] text-[#000000]"); // Yellow, black text
 
     const handleLike = async() =>{
+        setLoading(true);
+        if (likeState){
+            await dislikePost()
+        } else{
+            await likePost()
+        }
+        setLoading(false);
+        console.log(likes);
+
+    }
+    const likePost = async() =>{
         try{
-            setLoading(true);
             const response = await fetch(`http://localhost:3000/api/likes/${id}`,{
                 method: "POST",
                 headers: {
@@ -110,14 +122,32 @@ function Post({recipe,id}) {
             if (!response.ok){
                 alert(data.message);
                 setLoading(false);
-                navigate("/login");
-                return;
             }
             setLikeState(true);
-            setLikes(likes + 1);
-            setLoading(false);
+            setLikes([...likes,data]);
         }catch (e){
-            alert(e);
+            console.log(e)
+        }
+    }
+    const dislikePost = async() =>{
+        try{
+            const response = await fetch(`http://localhost:3000/api/likes/${id}`,{
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+            if (!response.ok){
+                alert(data.message);
+                setLoading(false);
+            }
+            setLikeState(false);
+            setLikes(likes.filter(like => like.username !== data.senderUsername));
+        }catch (e){
+            console.log(e)
         }
     }
 
@@ -142,7 +172,7 @@ function Post({recipe,id}) {
                 <p className={`${cuisineColorMap.get(recipe.cuisine)} p-2 rounded-2xl text-black font-bold`}>{recipe.cuisine}</p>
             </div>
             <button className={"cursor-pointer"} onClick={handleLike} disabled={loading}>{likeIcon}</button>
-            <span className={"ml-2"}>{likes} Likes</span>
+            <span className={"ml-2"}>{likes.length} Likes</span>
         </article>
     );
 }

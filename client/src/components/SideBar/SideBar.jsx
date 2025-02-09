@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SideBarLink from "./SideBarLink.jsx";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function SideBar(props) {
     const iconSize = 30;
@@ -13,6 +14,7 @@ function SideBar(props) {
             <SideBarLink to="/search" label="Search" icon={<SearchIcon sx={{ fontSize: iconSize }}/>}></SideBarLink>
             <SideBarLink to="/create" label="Create" icon={<AddCircleOutlineIcon sx={{ fontSize: iconSize }}/>}></SideBarLink>
             <SideBarLink to="/profile" label="Profile" icon={<AccountCircleIcon sx={{ fontSize: iconSize }}/>}></SideBarLink>
+            <SideBarLink to="/login" label="Log out" icon={<LogoutIcon sx={{ fontSize: iconSize }}/>}></SideBarLink>
         </div>
     );
 }

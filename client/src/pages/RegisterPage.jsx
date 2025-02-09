@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import {useContext, useState} from "react";
 import FormDataField from "../components/text-field/FormDataField";
 import {NavLink, useNavigate} from "react-router";
 import postData from "../utils/postData.js";
+import {AuthContext} from "../App.jsx";
 
 function RegisterPage() {
     const [user, setUser] = useState({
@@ -13,6 +14,8 @@ function RegisterPage() {
     });
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const {login} = useContext(AuthContext);
+
 
     function validateUser() {
         const reg =/[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -39,6 +42,7 @@ function RegisterPage() {
         try {
             const result = await postData("http://localhost:3000/api/users", user);
             console.log("Token:", result.token);
+            login(result.token);
             navigate("/");
         } catch (error) {
             setErrorMessage(error.message);

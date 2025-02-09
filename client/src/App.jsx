@@ -4,7 +4,7 @@ import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import {createContext, useEffect, useState} from "react";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 function App() {
     const [token, setToken] = useState(null);

@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import FormDataField from "../components/text-field/FormDataField";
 import {NavLink, useNavigate} from "react-router";
 import postData from "../utils/postData.js";
@@ -11,15 +11,17 @@ function LoginPage() {
     });
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const {login} = useContext(AuthContext);
-
+    const auth = useContext(AuthContext);
+    useEffect(() => {
+        auth.logout()
+    }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
         try {
             const result = await postData("http://localhost:3000/api/sessions", user);
             console.log("Token:", result.token);
-            login(result.token);
+            auth.login(result.token);
             navigate("/");
         } catch (error) {
             setErrorMessage(error.message);

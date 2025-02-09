@@ -98,6 +98,14 @@ export function getRecipeById(id){
         console.log(e)
     }
 }
+export function removeLikeOnPost(userId, postId){
+    try{
+        const res = db.prepare(queries.removeLikeOnPostQuery);
+        return res.run(userId, postId)
+    } catch (e){
+        console.log(e)
+    }
+}
 
 export default {
     addRecipe,
@@ -108,6 +116,7 @@ export default {
     getRecipesByCreatorId,
     getPostLikesByPostId,
     insertPostLike,
-    getRecipeById
+    getRecipeById,
+    removeLikeOnPost
 
 }

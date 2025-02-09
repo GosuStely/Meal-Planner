@@ -1,7 +1,7 @@
 import React from 'react';
 import Filter from "./Filter.jsx";
 
-function PostFilter(props) {
+function PostFilter() {
     const diets = [
         "Vegetarian",
         "Vegan",
@@ -43,10 +43,10 @@ function PostFilter(props) {
     ];
     return (
         <div className="flex gap-5 mx-30">
-            <Filter options={diets} label={"Filter by Diet"} handleChange={props.handleChange}/>
-            <Filter options={europeanCuisines} label={"Filter by Country"} handleChange={props.handleChange}/>
-            <Filter options={mealTypes} label={"Filter by Meal Type"} handleChange={props.handleChange}/>
-            <Filter options={foodCategories} label={"Filter by Category"} handleChange={props.handleChange}/>
+            <Filter options={diets} label={"Filter by Diet"}/>
+            <Filter options={europeanCuisines} label={"Filter by Country"}/>
+            <Filter options={mealTypes} label={"Filter by Meal Type"}/>
+            <Filter options={foodCategories} label={"Filter by Category"}/>
         </div>
     );
 }
