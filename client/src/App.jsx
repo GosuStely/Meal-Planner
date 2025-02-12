@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route} from "react-router";
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import {createContext, useEffect, useState} from "react";
+import CreateRecipePage from "./pages/CreateRecipePage.jsx";
 
 export const AuthContext = createContext(null);
 
@@ -31,6 +32,8 @@ function App() {
                     <Route path='/' element={<HomePage/>}/>
                     <Route path='/login' element={<LoginPage/>}/>
                     <Route path='/register' element={<RegisterPage/>}/>
+                    <Route path='/profile' element={<RegisterPage/>}/>
+                    <Route path='/create' element={<CreateRecipePage/>}/>
                 </Routes>
             </BrowserRouter>
         </AuthContext.Provider>

@@ -1,52 +1,44 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Filter from "./Filter.jsx";
+import {diets, europeanCuisines, foodCategories, mealTypes} from "../utils/filterOptions.js";
 
-function PostFilter() {
-    const diets = [
-        "Vegetarian",
-        "Vegan",
-        "Gluten-Free",
-        "Dairy-Free",
-        "Keto",
-        "Paleo",
-        "Low-Carb",
-        "High-Protein"
-    ];
-    const europeanCuisines = [
-        "Albanian Cuisine", "Andorran Cuisine", "Armenian Cuisine", "Austrian Cuisine", "Azerbaijani Cuisine",
-        "Belarusian Cuisine", "Belgian Cuisine", "Bosnian Cuisine", "Bulgarian Cuisine", "Croatian Cuisine",
-        "Cypriot Cuisine", "Czech Cuisine", "Danish Cuisine", "Estonian Cuisine", "Finnish Cuisine",
-        "French Cuisine", "Georgian Cuisine", "German Cuisine", "Greek Cuisine", "Hungarian Cuisine",
-        "Icelandic Cuisine", "Irish Cuisine", "Italian Cuisine", "Kosovar Cuisine", "Latvian Cuisine",
-        "Liechtenstein Cuisine", "Lithuanian Cuisine", "Luxembourgish Cuisine", "Maltese Cuisine", "Moldovan Cuisine",
-        "Monegasque Cuisine", "Montenegrin Cuisine", "Dutch Cuisine", "Macedonian Cuisine", "Norwegian Cuisine",
-        "Polish Cuisine", "Portuguese Cuisine", "Romanian Cuisine", "Sammarinese Cuisine", "Serbian Cuisine",
-        "Slovak Cuisine", "Slovenian Cuisine", "Spanish Cuisine", "Swedish Cuisine", "Swiss Cuisine",
-        "Ukrainian Cuisine", "British Cuisine", "Vatican Cuisine"
-    ];
-    const mealTypes = [
-        "Appetizer", "Main Course", "Dessert", "Side Dish", "Salad",
-        "Soup", "Snack", "Breakfast", "Brunch", "Lunch",
-        "Dinner", "Beverage", "Sauce", "Street Food", "Finger Food",
-        "Dip", "Spread", "Sandwich", "Casserole", "Grill",
-        "Stew", "Roast", "Pasta Dish", "Seafood Dish", "Vegan Dish",
-        "Vegetarian Dish", "Gluten-Free Dish", "Keto Meal", "Baked Goods", "Soufflé",
-        "Pizza", "Taco", "Wrap", "Barbecue", "Smoothie"
-    ];
-    const foodCategories = [
-        "Comfort Food", "Fast Food", "Street Food", "Gourmet", "Organic",
-        "Seasonal", "Seafood", "Poultry", "Beef", "Pork",
-        "Lamb", "Game Meat", "Grains", "Noodles & Pasta", "Rice Dishes",
-        "Soups & Stews", "Salads", "Sandwiches & Wraps", "Beverages", "Desserts",
-        "Baked Goods", "Spicy Dishes", "Sweet Treats", "Savory Dishes", "BBQ & Grilled",
-        "Ethnic Cuisine", "Fermented Foods", "Pickled Items", "Snacks", "Sustainably Sourced"
-    ];
+function PostFilter({recipes, handleFilter}) {
+    const [filter, setFilter] = useState({
+        diet: "",
+        cuisine: "",
+        mealType: "",
+        category: ""
+    });
+    useEffect(() => {
+        const filterItems = () => {
+            let filteredRecipes = recipes;
+            if (filter.diet !== ""){
+                filteredRecipes = filteredRecipes.filter((item) => item.diet === filter.diet);
+            }
+            if (filter.cuisine !== ""){
+                filteredRecipes = filteredRecipes.filter((item) => item.cuisine === filter.cuisine);
+            }
+            if (filter.mealType !== ""){
+                filteredRecipes = filteredRecipes.filter((item) => item.mealType === filter.mealType);
+            }
+            if (filter.category !== ""){
+                filteredRecipes = filteredRecipes.filter((item) => item.category === filter.category);
+            }
+            handleFilter(filteredRecipes);
+        }
+        filterItems();
+    }, [filter]);
+
+    const handleChange = e => {
+        setFilter({...filter, [e.target.id]: e.target.value});
+    }
+
     return (
-        <div className="flex gap-5 mx-30">
-            <Filter options={diets} label={"Filter by Diet"}/>
-            <Filter options={europeanCuisines} label={"Filter by Country"}/>
-            <Filter options={mealTypes} label={"Filter by Meal Type"}/>
-            <Filter options={foodCategories} label={"Filter by Category"}/>
+        <div className="flex gap-5 mx-30 my-5">
+            <Filter options={diets} label={"Filter by Diet"} id={"diet"} handleChange={handleChange}/>
+            <Filter options={europeanCuisines} label={"Filter by Cuisines"} id={"cuisine"} handleChange={handleChange}/>
+            <Filter options={mealTypes} label={"Filter by Meal Type"} id={"mealType"} handleChange={handleChange}/>
+            <Filter options={foodCategories} label={"Filter by Category"} id={"category"} handleChange={handleChange}/>
         </div>
     );
 }

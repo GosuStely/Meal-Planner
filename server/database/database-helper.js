@@ -43,7 +43,24 @@ export const truncateRecipeQuery = `
     DELETE FROM recipe
 `;
 export const getAllRecipeQuery =`
-    SELECT * FROM recipe ORDER BY id DESC;
+    SELECT         
+        r.id,
+        r.title,
+        r.instructions,
+        r.category,
+        r.meal_type,
+        r.cuisine,
+        r.diet,
+        r.ingredients,
+        u.username AS creator
+    FROM 
+        recipe AS r
+    LEFT JOIN 
+        user AS u 
+    ON 
+        r.creator = u.id
+    ORDER BY 
+        r.id DESC;
 `;
 export const getRecipesByCreatorIdQuery =`
     SELECT * FROM recipe WHERE creator = ?;

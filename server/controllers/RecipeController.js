@@ -14,11 +14,12 @@ export function getRecipesMadeByUser(req, res) {
 }
 export function createRecipe(req, res) {
     const recipe = req.body;
+    recipe.creator = req.user.id
     if (!recipe) {
         return res.status(400).json({message: 'Recipe can not be empty.'});
     }
     if (!isRecipeValid(recipe)) {
-        return res.status(400).json({message: 'Recipe should include all properties.'});
+        return res.status(400).json({message: 'Recipe should include all properties. Please select all options.'});
     }
     if (db.addRecipe(recipe)) {
         return res.status(201).json({message: 'Recipe created.'});

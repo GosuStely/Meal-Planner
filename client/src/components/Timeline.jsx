@@ -4,7 +4,6 @@ import PostFilter from "./PostFilter.jsx";
 import {AuthContext} from "../App.jsx";
 import {useNavigate} from "react-router";
 
-const RecipesContext = createContext(null);
 
 function Timeline() {
     const navigate = useNavigate();
@@ -41,12 +40,10 @@ function Timeline() {
     }, []);
 
     return (
-        <RecipesContext.Provider value={{recipes,setFilteredRecipes}}>
             <section className={"w-3/4 flex flex-col place-items-center"}>
-                <PostFilter/>
+                <PostFilter recipes={recipes} handleFilter={setFilteredRecipes}/>
                 {filteredRecipes.map((recipe, index) => (<Post key={recipe.id} recipe={recipe} id={recipe.id}/>))}
             </section>
-        </RecipesContext.Provider>
     );
 }
 
