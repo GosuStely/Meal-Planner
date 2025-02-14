@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import queries, {getPostLikesByPostIdQuery, getRecipeByIdQuery} from "./database-helper.js";
+import queries, {getPostLikesByPostIdQuery, getRecipeByIdQuery, getSuggestionsQuery} from "./database-helper.js";
 
 let db;
 
@@ -106,6 +106,22 @@ export function removeLikeOnPost(userId, postId){
         console.log(e)
     }
 }
+export function getSuggestions(activeUser){
+    try{
+        const res = db.prepare(queries.getSuggestionsQuery).bind(activeUser);
+        return res.all();
+    }catch(e){
+        console.log(e)
+    }
+}
+export function getPostLikesByUserId(id){
+    try{
+        const res = db.prepare(queries.getPostLikesByUserIdQuery).bind(id);
+        return res.all();
+    }catch(e){
+        console.log(e)
+    }
+}
 
 export default {
     addRecipe,
@@ -117,6 +133,8 @@ export default {
     getPostLikesByPostId,
     insertPostLike,
     getRecipeById,
-    removeLikeOnPost
+    removeLikeOnPost,
+    getSuggestions,
+    getPostLikesByUserId
 
 }

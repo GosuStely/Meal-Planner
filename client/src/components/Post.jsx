@@ -154,8 +154,8 @@ function Post({recipe,id}) {
 
     return (
         <article className="mx-30 px-5 mb-20 min-w-2/3">
-            <h2 className={"border-b border-gray-500 pb-2 text-lg"}>{recipe.creator}</h2>
-
+            <h2 className={"my-2 px-4 py-2 w-fit min-w-30 hover:bg-zinc-800 transition-all cursor-pointer rounded-xl text-2xl"}>{recipe.creator}</h2>
+            <hr/>
             <h3 className={"text-2xl text-center my-4"}>{recipe.title}</h3>
             <div className={"flex flex-col gap-1 my-4"}>
                 <span className={"text-xl"}>Ingredients:</span>
@@ -168,8 +168,8 @@ function Post({recipe,id}) {
             <p>Meal type: {recipe.meal_type}</p>
             <p>Category: {recipe.category}</p>
             <div className="flex justify-end gap-2 mt-2 mr-15">
-                <p className={`${dietColorMap.get(recipe.diet)} p-2 rounded-2xl text-black font-bold`}>{recipe.diet}</p>
-                <p className={`${cuisineColorMap.get(recipe.cuisine)} p-2 rounded-2xl text-black font-bold`}>{recipe.cuisine}</p>
+                <p className={`${dietColorMap.get(recipe.diet)} p-2 rounded-2xl text-black font-bold select-none`}>{recipe.diet}</p>
+                <p className={`${cuisineColorMap.get(recipe.cuisine)} p-2 rounded-2xl text-black font-bold select-none`}>{recipe.cuisine}</p>
             </div>
             <button className={"cursor-pointer"} onClick={handleLike} disabled={loading}>{likeIcon}</button>
             <span className={"ml-2"}>{likes.length} Likes</span>

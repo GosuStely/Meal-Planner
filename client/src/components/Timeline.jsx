@@ -42,7 +42,7 @@ function Timeline() {
     return (
             <section className={"w-3/4 flex flex-col place-items-center"}>
                 <PostFilter recipes={recipes} handleFilter={setFilteredRecipes}/>
-                {filteredRecipes.map((recipe, index) => (<Post key={recipe.id} recipe={recipe} id={recipe.id}/>))}
+                {filteredRecipes.map((recipe) => (<Post key={recipe.id} recipe={recipe} id={recipe.id}/>))}
             </section>
     );
 }

@@ -19,7 +19,7 @@ function PostFilter({recipes, handleFilter}) {
                 filteredRecipes = filteredRecipes.filter((item) => item.cuisine === filter.cuisine);
             }
             if (filter.mealType !== ""){
-                filteredRecipes = filteredRecipes.filter((item) => item.mealType === filter.mealType);
+                filteredRecipes = filteredRecipes.filter((item) => item.meal_type === filter.mealType);
             }
             if (filter.category !== ""){
                 filteredRecipes = filteredRecipes.filter((item) => item.category === filter.category);

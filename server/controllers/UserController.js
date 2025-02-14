@@ -47,10 +47,35 @@ export function userRegister(req, res) {
     let hash = bcrypt.hashSync(password, 10);
     const { lastInsertRowid } = db.addUser(username, email, hash);
 
-    const accessToken = generateAccessToken({ lastInsertRowid, username, email, hash });
+    const accessToken = generateAccessToken({ lastInsertRowid, username, email });
     res.status(201).json({ token: accessToken });
 }
 
 function generateAccessToken(user) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '4h' });
+}
+
+export function getSuggestionUsers(req,res){
+    const activeUser = req.user.username;
+    const users = db.getSuggestions(activeUser);
+    console.log(users);
+    res.status(200).json(users);
+
+}
+export function getUserProfile(req, res) {
+    const user = req.user;
+    const userId = req.params.id;
+    let likedPosts;
+    let createdPosts;
+    let isProfileOwner = userId == user.id;
+    if (!userId){
+        likedPosts = db.getPostLikesByUserId(user.id);
+        createdPosts = db.getRecipesByCreatorId(user.id);
+        isProfileOwner = true;
+    } else{
+        likedPosts = db.getPostLikesByUserId(userId);
+        createdPosts = db.getRecipesByCreatorId(userId);
+    }
+    console.log(user.id,userId)
+    res.status(200).json({likedPosts, createdPosts, isProfileOwner});
 }

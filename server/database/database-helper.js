@@ -20,6 +20,13 @@ export const getUserByUsernameQuery = `
 export const getUserByEmailQuery =`
     SELECT * FROM user WHERE email = ?;
 `
+export const getSuggestionsQuery =`
+    SELECT username,id
+     FROM user
+     WHERE username IS NOT ?
+     ORDER BY RANDOM()
+      LIMIT 5;
+`
 // Recipe queries
 export const createRecipeTableQuery = `
 CREATE TABLE IF NOT EXISTS recipe (
@@ -63,7 +70,11 @@ export const getAllRecipeQuery =`
         r.id DESC;
 `;
 export const getRecipesByCreatorIdQuery =`
-    SELECT * FROM recipe WHERE creator = ?;
+    SELECT r.id,r.title,r.instructions,r.category,r.meal_type,r.cuisine,r.diet,r.ingredients,u.username AS creator
+    FROM recipe AS r
+    INNER JOIN user AS u
+    ON u.id = r.creator
+    WHERE creator = ?;
 `;
 export const getRecipeByIdQuery =`
    SELECT * FROM recipe WHERE id = ?;
@@ -91,8 +102,18 @@ export const getPostLikesByPostIdQuery =`
      INNER JOIN user as u
      ON r.user_id = u.id
      WHERE r.recipe_id = ?;
+`;
+export const getPostLikesByUserIdQuery = `
+     SELECT r.title,r.instructions,r.category,r.meal_type,r.cuisine,r.diet,r.ingredients,r.id,u.username AS creator
+     FROM recipe_like as rl
+     INNER JOIN recipe as r
+     ON rl.recipe_id = r.id
+     INNER JOIN user as u
+     ON rl.user_id = u.id
+     WHERE rl.user_id = ?;
 `
 export const removeLikeOnPostQuery =`
+
     DELETE FROM recipe_like
     WHERE user_id = ? AND recipe_id = ?;
 `
@@ -112,5 +133,7 @@ export default {
     getRecipesByCreatorIdQuery,
     getPostLikesByPostIdQuery,
     getRecipeByIdQuery,
-    removeLikeOnPostQuery
+    removeLikeOnPostQuery,
+    getSuggestionsQuery,
+    getPostLikesByUserIdQuery
 }
