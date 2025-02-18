@@ -1,9 +1,9 @@
 import express from "express";
-import requestLogger from "./middleware/RequestLogger.js";
-import LikesRouter from "./routers/LikesRouter.js";
-import RecipeRouter from "./routers/RecipeRouter.js";
-import UserRouter from "./routers/UserRouter.js";
-import SessionRouter from "./routers/SessionRouter.js";
+import requestLogger from "../middleware/RequestLogger.js";
+import LikesRouter from "../routers/LikesRouter.js";
+import RecipeRouter from "../routers/RecipeRouter.js";
+import UserRouter from "../routers/UserRouter.js";
+import SessionRouter from "../routers/SessionRouter.js";
 import * as dotenv from 'dotenv';
 import cors from "cors";
 
