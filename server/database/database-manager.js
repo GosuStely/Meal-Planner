@@ -7,13 +7,14 @@ function createDatabase() {
     if (!db) {
         try {
             db = new Database(`${process.cwd()}/database/db.db`);
-            console.log(`${process.cwd()}/database/db.db`);
             db.exec(queries.createUserTableQuery);
             db.exec(queries.createRecipeTableQuery);
             db.exec(queries.createLikeTableQuery);
             console.log("Database created successfully.");
         } catch (e) {
-            console.log("Error with initializing db!", e);
+            console.error("Error with initializing db!", e);
+            console.error(`${process.cwd()}/database/db.db`);
+
         }
     }
 }
