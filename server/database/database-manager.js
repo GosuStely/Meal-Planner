@@ -1,12 +1,13 @@
 import Database from "better-sqlite3";
-import queries, {getPostLikesByPostIdQuery, getRecipeByIdQuery, getSuggestionsQuery} from "./database-helper.js";
+import queries from "./database-helper.js";
 
 let db;
 
 function createDatabase() {
     if (!db) {
         try {
-            db = new Database("./database/db.db");
+            db = new Database(`${process.cwd()}/database/db.db`);
+            console.log(`${process.cwd()}/database/db.db`);
             db.exec(queries.createUserTableQuery);
             db.exec(queries.createRecipeTableQuery);
             db.exec(queries.createLikeTableQuery);
