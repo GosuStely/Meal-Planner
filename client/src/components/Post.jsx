@@ -3,6 +3,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {pink} from "@mui/material/colors";
 import {useNavigate} from "react-router";
+import {prodURL} from "../utils/urls.js";
 
 function Post({recipe,id}) {
     //da se napravi Like component v koito da se sloji logikata ot tuka
@@ -15,7 +16,7 @@ function Post({recipe,id}) {
     useEffect(() => {
         const getLikes = async () =>{
             try{
-                const response = await fetch(`http://localhost:3000/api/likes/${id}`,{
+                const response = await fetch(`${prodURL}/api/likes/${id}`,{
                     headers:{
                         Authorization: `Bearer ${token}`
                     }

@@ -2,9 +2,9 @@ import React, {useContext, useEffect, useState} from "react";
 import {NavLink, useNavigate} from "react-router";
 import {AuthContext} from "../App.jsx";
 import SideBar from "../components/SideBar/SideBar.jsx";
-import Suggestions from "../components/Suggestions.jsx";
 import Search from "../components/Search.jsx";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {prodURL} from "../utils/urls.js";
 
 function SearchPage() {
     const [users,setUsers] = useState([]);
@@ -19,7 +19,7 @@ function SearchPage() {
                 navigate("/login");
                 return;
             }
-            const response = await fetch("http://localhost:3000/api/users", {
+            const response = await fetch(`${prodURL}/api/users`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

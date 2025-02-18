@@ -3,6 +3,7 @@ import FormDataField from "../components/text-field/FormDataField";
 import {NavLink, useNavigate} from "react-router";
 import postData from "../utils/postData.js";
 import {AuthContext} from "../App.jsx";
+import {prodURL} from "../utils/urls.js";
 
 function LoginPage() {
     const [user, setUser] = useState({
@@ -19,7 +20,7 @@ function LoginPage() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const result = await postData("http://localhost:3000/api/sessions", user);
+            const result = await postData(`${prodURL}/api/sessions`, user);
             console.log("Token:", result.token);
             auth.login(result.token);
             navigate("/");

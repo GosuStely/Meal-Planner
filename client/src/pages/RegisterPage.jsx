@@ -4,6 +4,7 @@ import FormDataField from "../components/text-field/FormDataField";
 import {NavLink, useNavigate} from "react-router";
 import postData from "../utils/postData.js";
 import {AuthContext} from "../App.jsx";
+import {prodURL} from "../utils/urls.js";
 
 function RegisterPage() {
     const [user, setUser] = useState({
@@ -40,7 +41,7 @@ function RegisterPage() {
             return;
         }
         try {
-            const result = await postData("http://localhost:3000/api/users", user);
+            const result = await postData(`${prodURL}/api/users`, user);
             console.log("Token:", result.token);
             auth.login(result.token);
             navigate("/");

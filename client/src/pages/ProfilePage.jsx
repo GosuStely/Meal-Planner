@@ -4,6 +4,7 @@ import RadioButton from "../components/RadioButton.jsx";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../App.jsx";
 import Post from "../components/Post.jsx";
+import {prodURL} from "../utils/urls.js";
 
 
 function ProfilePage() {
@@ -21,7 +22,7 @@ function ProfilePage() {
                 navigate("/login");
                 return;
             }
-            const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+            const response = await fetch(`${prodURL}/api/users/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

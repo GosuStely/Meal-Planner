@@ -4,6 +4,7 @@ import Suggestions from "../components/Suggestions.jsx";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {AuthContext} from "../App.jsx";
+import {prodURL} from "../utils/urls.js";
 function HomePage() {
     const [users,setUsers] = useState([]);
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function HomePage() {
                 navigate("/login");
                 return;
             }
-                const response = await fetch("http://localhost:3000/api/users?limit=true", {
+                const response = await fetch(`${prodURL}/api/users?limit=true`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

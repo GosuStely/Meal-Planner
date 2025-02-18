@@ -3,6 +3,7 @@ import Post from "./Post.jsx";
 import PostFilter from "./PostFilter.jsx";
 import {AuthContext} from "../App.jsx";
 import {useNavigate} from "react-router";
+import {prodURL} from "../utils/urls.js";
 
 
 function Timeline() {
@@ -19,7 +20,7 @@ function Timeline() {
             return;
         }
         const fetchRecipes = async () => {
-            const response = await fetch("http://localhost:3000/api/recipes", {
+            const response = await fetch(`${prodURL}/api/recipes`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
