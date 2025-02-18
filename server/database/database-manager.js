@@ -114,10 +114,26 @@ export function getSuggestions(activeUser){
         console.log(e)
     }
 }
+export function getAllUsers(activeUser){
+    try{
+        const res = db.prepare(queries.getAllUsersQuery).bind(activeUser);
+        return res.all();
+    }catch(e){
+        console.log(e)
+    }
+}
 export function getPostLikesByUserId(id){
     try{
         const res = db.prepare(queries.getPostLikesByUserIdQuery).bind(id);
         return res.all();
+    }catch(e){
+        console.log(e)
+    }
+}
+export function getUserById(id){
+    try{
+        const res = db.prepare(queries.getUserByIdQuery).bind(id);
+        return res.get();
     }catch(e){
         console.log(e)
     }
@@ -135,6 +151,8 @@ export default {
     getRecipeById,
     removeLikeOnPost,
     getSuggestions,
-    getPostLikesByUserId
+    getPostLikesByUserId,
+    getUserById,
+    getAllUsers
 
 }

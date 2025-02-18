@@ -45,9 +45,9 @@ export function userRegister(req, res) {
         return res.status(400).json({ message: 'Email can not be more than 100 characters' });
     }
     let hash = bcrypt.hashSync(password, 10);
-    const { lastInsertRowid } = db.addUser(username, email, hash);
+    const id = db.addUser(username, email, hash).lastInsertRowid;
 
-    const accessToken = generateAccessToken({ lastInsertRowid, username, email });
+    const accessToken = generateAccessToken({ id, username, email });
     res.status(201).json({ token: accessToken });
 }
 
@@ -57,25 +57,33 @@ function generateAccessToken(user) {
 
 export function getSuggestionUsers(req,res){
     const activeUser = req.user.username;
-    const users = db.getSuggestions(activeUser);
+    const limit = req.query.limit;
+    console.log(limit)
+    let users;
+    //if there is a limit we assume is a suggestion limit and get random suggestions
+    if (limit){
+        users = db.getSuggestions(activeUser);
+    } else{
+        users = db.getAllUsers(activeUser);
+    }
     console.log(users);
     res.status(200).json(users);
-
 }
 export function getUserProfile(req, res) {
     const user = req.user;
     const userId = req.params.id;
+    let username;
     let likedPosts;
     let createdPosts;
-    let isProfileOwner = userId == user.id;
     if (!userId){
         likedPosts = db.getPostLikesByUserId(user.id);
         createdPosts = db.getRecipesByCreatorId(user.id);
-        isProfileOwner = true;
+        username = req.user.username;
     } else{
         likedPosts = db.getPostLikesByUserId(userId);
         createdPosts = db.getRecipesByCreatorId(userId);
+        username = db.getUserById(userId).username;
     }
     console.log(user.id,userId)
-    res.status(200).json({likedPosts, createdPosts, isProfileOwner});
+    res.status(200).json({likedPosts, createdPosts,username});
 }

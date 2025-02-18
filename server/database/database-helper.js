@@ -19,14 +19,24 @@ export const getUserByUsernameQuery = `
 `;
 export const getUserByEmailQuery =`
     SELECT * FROM user WHERE email = ?;
-`
+`;
 export const getSuggestionsQuery =`
     SELECT username,id
      FROM user
      WHERE username IS NOT ?
      ORDER BY RANDOM()
       LIMIT 5;
-`
+`;
+export const getAllUsersQuery=`
+    SELECT username,id
+     FROM user
+     WHERE username IS NOT ?
+`;
+export const getUserByIdQuery =`
+    SELECT username,email
+    FROM user
+    WHERE id = ?;
+`;
 // Recipe queries
 export const createRecipeTableQuery = `
 CREATE TABLE IF NOT EXISTS recipe (
@@ -135,5 +145,7 @@ export default {
     getRecipeByIdQuery,
     removeLikeOnPostQuery,
     getSuggestionsQuery,
-    getPostLikesByUserIdQuery
+    getPostLikesByUserIdQuery,
+    getUserByIdQuery,
+    getAllUsersQuery
 }

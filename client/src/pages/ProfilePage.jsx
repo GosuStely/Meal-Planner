@@ -13,7 +13,6 @@ function ProfilePage() {
     const [username,setUsername] = useState();
     const [likedPosts,setLikedPosts] = useState([]);
     const [createdPosts,setCreatedPosts] = useState([]);
-    let isProfileOwner = false;
     const [currPosts, setCurrPosts] = useState([]);
     useEffect(() => {
         const fetchProfile = async() =>{
@@ -37,13 +36,11 @@ function ProfilePage() {
             }
             setLikedPosts(data.likedPosts)
             setCreatedPosts(data.createdPosts)
-            isProfileOwner = data.isProfileOwner
-            setCurrPosts(createdPosts.map(recipe => <Post key={recipe.id} recipe={recipe} id={recipe.id}/>));
-
-            console.log(likedPosts);
-            console.log(createdPosts);
+            setUsername(data.username)
+            setCurrPosts(data.createdPosts.map(recipe => <Post key={recipe.id} recipe={recipe} id={recipe.id}/>));
         }
-        console.log(currPosts,"sdsds")
+
+        console.log(currPosts,"sdsds");
         fetchProfile();
 
     },[id])
@@ -58,14 +55,14 @@ function ProfilePage() {
         <main className={"bg-black text-white h-full min-h-screen flex flex-row"}>
             <SideBar/>
             <div className={"w-full flex flex-col gap-5 mt-15"}>
-                <h1 className={"text-3xl"}>Welcome</h1>
+                <h1 className={"text-3xl"}>{username}</h1>
                 <hr/>
                 <div onChange={handleChange} className={"flex gap-5"}>
                     <RadioButton value={"created"} name={"option"} label={"Created"} checked={true}/>
                     <RadioButton value={"liked"} name={"option"} label={"Liked"}/>
                 </div>
                 <div className="flex flex-col gap-5">
-                    {currPosts}
+                    {currPosts.length > 0 ? currPosts : <span>No posts</span>}
                 </div>
             </div>
         </main>

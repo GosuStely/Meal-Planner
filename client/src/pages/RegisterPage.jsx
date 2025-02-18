@@ -14,7 +14,8 @@ function RegisterPage() {
     });
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const {login} = useContext(AuthContext);
+    const auth = useContext(AuthContext);
+
 
 
     function validateUser() {
@@ -42,7 +43,7 @@ function RegisterPage() {
         try {
             const result = await postData("http://localhost:3000/api/users", user);
             console.log("Token:", result.token);
-            login(result.token);
+            auth.login(result.token);
             navigate("/");
         } catch (error) {
             setErrorMessage(error.message);

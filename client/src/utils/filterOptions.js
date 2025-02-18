@@ -19,7 +19,7 @@ export const europeanCuisines = [
     "Polish Cuisine", "Portuguese Cuisine", "Romanian Cuisine", "Sammarinese Cuisine", "Serbian Cuisine",
     "Slovak Cuisine", "Slovenian Cuisine", "Spanish Cuisine", "Swedish Cuisine", "Swiss Cuisine",
     "Ukrainian Cuisine", "British Cuisine", "Vatican Cuisine"
-];
+].sort();
 export const mealTypes = [
     "Appetizer", "Main Course", "Dessert", "Side Dish", "Salad",
     "Soup", "Snack", "Breakfast", "Brunch", "Lunch",
@@ -28,7 +28,7 @@ export const mealTypes = [
     "Stew", "Roast", "Pasta Dish", "Seafood Dish", "Vegan Dish",
     "Vegetarian Dish", "Gluten-Free Dish", "Keto Meal", "Baked Goods", "Soufflé",
     "Pizza", "Taco", "Wrap", "Barbecue", "Smoothie"
-];
+].sort();
 export const foodCategories = [
     "Comfort Food", "Fast Food", "Street Food", "Gourmet", "Organic",
     "Seasonal", "Seafood", "Poultry", "Beef", "Pork",
@@ -36,4 +36,4 @@ export const foodCategories = [
     "Soups & Stews", "Salads", "Sandwiches & Wraps", "Beverages", "Desserts",
     "Baked Goods", "Spicy Dishes", "Sweet Treats", "Savory Dishes", "BBQ & Grilled",
     "Ethnic Cuisine", "Fermented Foods", "Pickled Items", "Snacks", "Sustainably Sourced"
-];
+].sort();

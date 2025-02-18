@@ -1,7 +1,7 @@
 import FormDataField from "../components/text-field/FormDataField.jsx";
 import SideBar from "../components/SideBar/SideBar.jsx";
 import RecipeDataField from "../components/text-field/RecipeDataField.jsx";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Suggestions from "../components/Suggestions.jsx";
 import Filter from "../components/Filter.jsx";
 import {diets, europeanCuisines, foodCategories, mealTypes} from "../utils/filterOptions.js";
@@ -14,6 +14,7 @@ import {AuthContext} from "../App.jsx";
 function CreateRecipePage() {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState("");
+    const [users, setUsers] = useState([]);
     const {token} = useContext(AuthContext);
     const [recipe, setRecipe] = useState({
         title: "",
@@ -24,6 +25,30 @@ function CreateRecipePage() {
         instructions: "",
         meal_type: ""
     });
+    useEffect(() => {
+        const fetchUsers = async () => {
+            if (!token) {
+                alert("You have logged out");
+                navigate("/login");
+                return;
+            }
+            const response = await fetch("http://localhost:3000/api/users?limit=true", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            console.log(data)
+            if (!response.ok) {
+                alert(data.message);
+                return;
+            }
+            setUsers(data);
+        }
+        fetchUsers();
+    }, []);
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
@@ -59,7 +84,7 @@ function CreateRecipePage() {
                     Submit
                 </button>
             </form>
-            <Suggestions users={["Pesho", "Ivan", "Georgi", "Aleks", "Sasho"]}/>
+            <Suggestions users={users}/>
         </main>
     );
 }

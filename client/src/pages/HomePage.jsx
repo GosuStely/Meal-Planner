@@ -15,7 +15,7 @@ function HomePage() {
                 navigate("/login");
                 return;
             }
-                const response = await fetch("http://localhost:3000/api/users", {
+                const response = await fetch("http://localhost:3000/api/users?limit=true", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

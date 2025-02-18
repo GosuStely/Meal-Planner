@@ -11,12 +11,13 @@ function FormDataField({ type, id, value, handleChange }) {
         <div className="flex flex-col w-full">
             <label htmlFor={id} className="select-none">{label}</label>
             <input
-                className="bg-white p-2 w-full border border-black focus:outline-blue-500 placeholder:font-extralight"
+                className="bg-black border border-gray-300 text-white p-3 rounded appearance-none w-full"
                 type={type}
                 id={id}
                 value={value}
                 placeholder={placeholder}
                 required={true}
+                autoComplete={"off"}
                 onChange={(e) => handleChange(e)} />
         </div>
     );
