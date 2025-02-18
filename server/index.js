@@ -18,4 +18,8 @@ app.use("/api/recipes", RecipeRouter);
 app.use("/api/users", UserRouter);
 app.use("/api/sessions", SessionRouter);
 
+app.use((req, res) => {
+    res.status(404).send('Route not found');
+});
+
 app.listen(port, () => console.log(`Server started on port ${port}`));
