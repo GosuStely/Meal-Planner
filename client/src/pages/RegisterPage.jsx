@@ -17,14 +17,13 @@ function RegisterPage() {
     const auth = useContext(AuthContext);
 
 
-
     function validateUser() {
-        const reg =/[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        const reg = /[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
         if (!reg.test(user.email)) {
             setErrorMessage("Invalid email");
             return false
         }
-        if (user.password < 6 ) {
+        if (user.password < 6) {
             setErrorMessage("Passwords can not be less than 6 characters");
             return false
         }
@@ -37,7 +36,7 @@ function RegisterPage() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (!validateUser()){
+        if (!validateUser()) {
             return;
         }
         try {
@@ -49,13 +48,14 @@ function RegisterPage() {
             setErrorMessage(error.message);
         }
     }
+
     function handleChange(e) {
-        setUser({ ...user, [e.target.id]: e.target.value });
+        setUser({...user, [e.target.id]: e.target.value});
         console.log();
     }
 
     return (
-        <main className="h-screen flex flex-col justify-center place-items-center">
+        <main className="h-screen flex flex-col justify-center place-items-center bg-black text-white">
             <h1 className={"text-3xl"}>Register</h1>
             <form className="flex flex-col justify-center place-items-center gap-5 w-1/5"
                   onSubmit={(e) => handleSubmit(e)}>
@@ -67,7 +67,8 @@ function RegisterPage() {
                 <FormDataField type={"password"} id={"repeatPassword"} value={user.repeatPassword}
                                handleChange={(e) => handleChange(e)}/>
                 <p className={`select-none ${errorMessage === "" ? 'text-white' : 'text-red-600'}`}>{errorMessage}</p>
-                <NavLink to={"/login"} className={"text-blue-800 underline self-start"}>Log in</NavLink>
+                <NavLink to={"/login"} className={"underline self-start"}>Log in</NavLink>
+                <p className={"text-red-600"}>Please dont use real personal data!!!</p>
                 <button type="submit"
                         className="font-sans bg-blue-500 py-2 px-5 rounded-sm hover:bg-blue-600 hover:text-white cursor-pointer hover:scale-x-105 transition-all">Register
                 </button>
